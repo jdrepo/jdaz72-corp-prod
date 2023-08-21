@@ -1,6 +1,3 @@
-// cd "C:\Users\diedrich\OneDrive\_develop\repos\jdaz72-corp-prod\deploy"
-// az account set --subscription ef6ea1fb-82dd-46bb-a72d-f36c20802858
-// az deployment sub create --name DeployALZ --location westeurope --template-file main.bicep 
 
 targetScope = 'subscription'
 
