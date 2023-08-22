@@ -67,7 +67,7 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           deploymentName: ${{ github.run_number }}
-          failOnStdErr: true
+          failOnStdErr: false
           scope: subscription
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID}}
           region: westeurope
