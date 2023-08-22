@@ -16,8 +16,6 @@ permissions:
   id-token: write
   contents: read
 
-env:
-  ENVIRONMENT: prod
 
 jobs:
   # Lint the Bicep file.
@@ -29,7 +27,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     needs: lint
     with:
-      environment: Dev
+      environmentType: Dev
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID_DEV }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID_DEV }}
@@ -40,7 +38,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     needs: lint
     with:
-      environment: Prod
+      environmentType: Prod
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID_PROD }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID_PROD }}
