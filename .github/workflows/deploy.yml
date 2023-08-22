@@ -1,0 +1,106 @@
+name: deploy
+
+on:
+  workflow_call:
+    inputs:
+      environmentType:
+        required: true
+        type: string
+    secrets:
+      AZURE_CLIENT_ID:
+        required: true
+      AZURE_TENANT_ID:
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        required: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Run validation job
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v3
+        with:
+          path: main   
+      - name: Checkout ResourceModule
+        uses: actions/checkout@v3
+        with:
+          repository: jdrepo/ResourceModules
+          path: ResourceModules
+      - name: Azure CLI login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Run preflight validation
+        uses: Azure/arm-deploy@v1
+        with:
+          deploymentName: ${{ github.run_number }}
+          failOnStdErr: false
+          scope: subscription
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID}}
+          region: westeurope
+          template: ./main/deploy/main.bicep
+          parameters: environment=${{ inputs.environmentType}}
+          deploymentMode: Validate
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v3
+        with:
+          path: main   
+      - name: Checkout ResourceModule
+        uses: actions/checkout@v3
+        with:
+          repository: jdrepo/ResourceModules
+          path: ResourceModules
+      - name: Azure CLI login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Run what-if
+        uses: Azure/arm-deploy@v1
+        with:
+          deploymentName: ${{ github.run_number }}
+          failOnStdErr: false
+          scope: subscription
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID}}
+          region: westeurope
+          template: ./main/deploy/main.bicep
+          parameters: environment=${{ inputs.environmentType}}
+          additionalArguments: --what-if
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [validate,preview]
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v3
+        with:
+          path: main   
+      - name: Checkout ResourceModule
+        uses: actions/checkout@v3
+        with:
+          repository: jdrepo/ResourceModules
+          path: ResourceModules
+      - name: Azure CLI login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@v1
+        with:
+          deploymentName: ${{ github.run_number }}
+          failOnStdErr: false
+          scope: subscription
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          region: westeurope
+          template: ./main/deploy/main.bicep
+          parameters: environment=${{ inputs.environmentType}}
+          
