@@ -37,7 +37,7 @@ jobs:
   
       # Deploy to the Prod environment
   deploy-prod:
-    uses: ./.github/workflow/deploy.yml
+    uses: ./.github/workflows/deploy.yml
     needs: lint
     with:
       environment: Prod
