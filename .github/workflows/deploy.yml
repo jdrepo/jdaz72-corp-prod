@@ -16,7 +16,6 @@ on:
 
 jobs:
   validate:
-    environment: ${{ inputs.environmentType}}
     runs-on: ubuntu-latest
     name: Run validation job
     steps:
@@ -39,7 +38,7 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           deploymentName: ${{ github.run_number }}
-          failOnStdErr: false
+          failOnStdErr: true
           scope: subscription
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID}}
           region: westeurope
@@ -47,7 +46,6 @@ jobs:
           parameters: environment=${{ inputs.environmentType}}
           deploymentMode: Validate
   preview:
-    environment: ${{ inputs.environmentType}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
@@ -69,7 +67,7 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           deploymentName: ${{ github.run_number }}
-          failOnStdErr: false
+          failOnStdErr: true
           scope: subscription
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID}}
           region: westeurope
