@@ -83,5 +83,6 @@ module mod_activeDirectory 'activeDirectory.bicep' = {
     tags: tags
     adminPassword: 'ChangeMe1!'
     location: modRgIdentity.outputs.location
+    environment: environment
   }
 }
