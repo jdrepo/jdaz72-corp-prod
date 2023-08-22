@@ -26,7 +26,7 @@ jobs:
 
   # Deploy to the Dev environment
   deploy-dev:
-    uses: ./.github/workflow/deploy.yml
+    uses: ./.github/workflows/deploy.yml
     needs: lint
     with:
       environment: Dev
