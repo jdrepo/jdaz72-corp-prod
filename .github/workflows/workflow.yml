@@ -22,7 +22,7 @@ env:
 jobs:
   # Lint the Bicep file.
   lint:
-    uses: ./main/.github/workflows/lint.yml
+    uses: ./.github/workflows/lint.yml
 
   # Deploy to the Dev environment
   deploy-dev:
