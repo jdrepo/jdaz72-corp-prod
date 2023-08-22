@@ -36,7 +36,7 @@ param adSubnet1 string = '10.99.1.0/24'
 
 var _dep = deployment().name
 
-module mod_vnet001 '../../ResourceModules/modules/network/virtual-networks/main.bicep' = {
+module mod_vnet001 '../../ResourceModules/modules/network/virtual-network/main.bicep' = {
  name: '${_dep}-vnet-001-${environment}'
  params: {
   location: location

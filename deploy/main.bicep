@@ -29,7 +29,7 @@ var tags = {
 
 var _dep = deployment().name
 
-module modRgIdentity '../../ResourceModules/modules/resources/resource-groups/main.bicep' = {
+module modRgIdentity '../../ResourceModules/modules/resources/resource-group/main.bicep' = {
   name: '${_dep}-${rgIdentityName}'
   scope: subscription()
   params: {
@@ -40,7 +40,7 @@ module modRgIdentity '../../ResourceModules/modules/resources/resource-groups/ma
 }
 
 
-module modRgConnectivity '../../ResourceModules/modules/resources/resource-groups/main.bicep' = {
+module modRgConnectivity '../../ResourceModules/modules/resources/resource-group/main.bicep' = {
   name: '${_dep}-rg-connectivity-${projectId}-${environment}'
   scope: subscription()
   params: {
@@ -50,7 +50,7 @@ module modRgConnectivity '../../ResourceModules/modules/resources/resource-group
   }
 }
 
-module modRgManagement '../../ResourceModules/modules/resources/resource-groups/main.bicep' = {
+module modRgManagement '../../ResourceModules/modules/resources/resource-group/main.bicep' = {
   name: '${_dep}-rg-management-${projectId}-${environment}'
   scope: subscription()
   params: {
@@ -61,7 +61,7 @@ module modRgManagement '../../ResourceModules/modules/resources/resource-groups/
 }
 
 
-module mod_laws_shared001 '../../ResourceModules/modules/operational-insights/workspaces/main.bicep' = {
+module mod_laws_shared001 '../../ResourceModules/modules/operational-insights/workspace/main.bicep' = {
   name: '${_dep}-laws-001-${environment}'
   scope: resourceGroup(rgManagementName)
   params: {
