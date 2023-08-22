@@ -38,7 +38,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     needs: lint
     with:
-      environmentType: Prod
+      environmentType: prod
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID_PROD }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID_PROD }}
