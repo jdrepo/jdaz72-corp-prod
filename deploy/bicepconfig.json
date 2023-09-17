@@ -1,0 +1,16 @@
+{
+    "moduleAliases": {
+        "br": {
+            "modules": {
+                "registry": "jdazacrbicep.azurecr.io",
+                "modulePath": "bicep/modules"
+            }
+        },
+        "ts": {
+            "modules": {
+                "subscription": "ef6ea1fb-82dd-46bb-a72d-f36c20802858",
+                "resourceGroup": "rg-artifacts"
+            }
+        }
+    }
+}
